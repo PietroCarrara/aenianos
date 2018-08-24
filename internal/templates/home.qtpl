@@ -1,3 +1,9 @@
 {% func Hello() %}
-	Hello, world!
+	
+	{%= Header() %}
+
+	<h1>Hello, world!</h1>
+
+	{%= Footer() %}
+
 {% endfunc %}

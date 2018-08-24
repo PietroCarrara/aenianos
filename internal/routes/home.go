@@ -1,10 +1,11 @@
 package routes
 
 import (
+	"github.com/PietroCarrara/aenianos/internal/templates"
 	"net/http"
 )
 
-func home(w http.ResponseWriter, r *http.Request) {
+func Home(w http.ResponseWriter, r *http.Request) {
 
-	w.Write([]byte("Hello!"))
+	w.Write([]byte(templates.Hello()))
 }

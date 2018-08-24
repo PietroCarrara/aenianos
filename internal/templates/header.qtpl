@@ -1,0 +1,13 @@
+{% func Header() %}
+
+	<!DOCTYPE html>
+	
+	<html>
+		<head>
+			<title>Aenianos</title>
+			<meta charset="utf-8">
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
+		</head>
+		<body>
+
+{% endfunc %}

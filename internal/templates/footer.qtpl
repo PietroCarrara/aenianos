@@ -1,0 +1,6 @@
+{% func Footer() %}
+
+	</body>
+</html>
+
+{% endfunc %}
