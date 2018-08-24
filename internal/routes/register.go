@@ -19,6 +19,7 @@ func RegisterPost(w http.ResponseWriter, r *http.Request) {
 	user := r.PostFormValue("usuario")
 	pass := r.PostFormValue("senha")
 
+	// Verificar se já há alguém com o nome solicitado
 	usuario := aenianos.User{}
 	data.Db.Where("username = ?", user).First(&usuario)
 	if usuario.ID > 0 {
@@ -26,8 +27,8 @@ func RegisterPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Hashear a senha
 	cryptedPass, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,4 +36,13 @@ func RegisterPost(w http.ResponseWriter, r *http.Request) {
 	u := aenianos.User{Username: user, Password: string(cryptedPass), AccessLevel: aenianos.ACCESS_NORMAL}
 
 	data.Db.Save(&u)
+
+	sess, err := data.Store.Get(r, data.MainSession)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	sess.Values["User.ID"] = u.ID
+
+	sess.Save(r, w)
 }

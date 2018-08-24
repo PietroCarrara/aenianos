@@ -8,6 +8,8 @@ import (
 	"log"
 )
 
+const MainSession = "session"
+
 var Store = sessions.NewCookieStore([]byte("secret"))
 
 var Db *gorm.DB
