@@ -1,9 +1,43 @@
-{% func Hello() %}
+{%import (
+	"github.com/PietroCarrara/aenianos/internal/context"
+)%}
+
+{% func Hello(c context.Context) %}
 	
-	{%= Header() %}
+	{%= Header(c) %}
 
 	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
+	<h1>Hello, world!</h1>
 
-	{%= Footer() %}
+	{%= Footer(c) %}
 
 {% endfunc %}

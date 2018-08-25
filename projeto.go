@@ -12,9 +12,10 @@ type Projeto struct {
 	NomeJap string
 	Tipo
 	Status
-	Generos []Genero `gorm:"many2many:projeto_genero;"`
-	Links   []Link
-	Sinopse string `gorm:"type:TEXT;"`
+	Generos    []Genero `gorm:"many2many:projeto_genero;"`
+	Links      []Link
+	Sinopse    string `gorm:"type:TEXT;"`
+	Qualidades []Qualidade
 
 	// Data de transmissão
 	IniTrans *time.Time

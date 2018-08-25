@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/PietroCarrara/aenianos"
+	"github.com/PietroCarrara/aenianos/internal/context"
 	"github.com/PietroCarrara/aenianos/internal/data"
 	"github.com/PietroCarrara/aenianos/internal/templates"
 	"golang.org/x/crypto/bcrypt"
@@ -11,7 +12,9 @@ import (
 
 func LoginGet(w http.ResponseWriter, r *http.Request) {
 
-	w.Write([]byte(templates.Login()))
+	ctx := context.GetContext(r)
+
+	w.Write([]byte(templates.Login(ctx)))
 }
 
 func LoginPost(w http.ResponseWriter, r *http.Request) {
@@ -26,6 +29,7 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 
 		if err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(pass)); err != nil {
 			// Errou a senha
+			// TODO: Avisar do erro
 		} else {
 
 			sess, err := data.Store.Get(r, data.MainSession)
@@ -36,9 +40,10 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 			sess.Values["User.ID"] = u.ID
 			sess.Save(r, w)
 
-			// TODO: redirect
+			Redirect(w, r, "/user")
 		}
 	} else {
 		// Errou o usuário
+		// TODO: Avisar do erro
 	}
 }

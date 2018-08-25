@@ -1,6 +1,10 @@
-{% func Login() %}
+{%import (
+	"github.com/PietroCarrara/aenianos/internal/context"
+)%}
 
-{%= Header() %}
+{% func Login(ctx context.Context) %}
+
+{%= Header(ctx) %}
 
 <form method="post">
 	<input type="text" name="usuario">
@@ -8,6 +12,6 @@
 	<input type="submit" value="Login">
 </form>
 
-{%= Footer() %}
+{%= Footer(ctx) %}
 
 {% endfunc %}

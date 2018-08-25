@@ -18,4 +18,6 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	sess.Values = map[interface{}]interface{}{}
 
 	sess.Save(r, w)
+
+	Redirect(w, r, "/user")
 }

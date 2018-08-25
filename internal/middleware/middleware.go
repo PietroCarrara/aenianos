@@ -1,9 +1,8 @@
 package middleware
 
 import (
-	"github.com/PietroCarrara/aenianos"
-	"github.com/PietroCarrara/aenianos/internal/data"
-	"log"
+	"github.com/PietroCarrara/aenianos/internal/context"
+	"github.com/PietroCarrara/aenianos/internal/routes"
 	"net/http"
 )
 
@@ -11,27 +10,20 @@ func AccessLevel(level int, route func(http.ResponseWriter, *http.Request)) func
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		sess, err := data.Store.Get(r, data.MainSession)
-		if err != nil {
-			log.Fatal(err)
-		}
-		id, ok := sess.Values["User.ID"]
-		if !ok {
-			// user is not logged in
-			// TODO: redirect to login
+		ctx := context.GetContext(r)
+
+		if ctx.User == nil {
+			// User is not logged. Go to login
+			routes.Redirect(w, r, "/login")
 			return
 		}
 
-		user := aenianos.User{}
-		data.Db.First(&user, id.(uint))
-		if user.ID <= 0 {
-			log.Fatal("Invalid User.ID in session!")
-		}
-
-		if user.AccessLevel >= level {
+		if ctx.User.AccessLevel >= level {
 			route(w, r)
 		} else {
-			// TODO: redirect somewhere
+			// User is not authorized.
+			// TODO: add errors to the session
+			routes.Redirect(w, r, "/home")
 		}
 	}
 }
@@ -40,16 +32,13 @@ func Unlogged(route func(http.ResponseWriter, *http.Request)) func(http.Response
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		sess, err := data.Store.Get(r, data.MainSession)
-		if err != nil {
-			log.Fatal(err)
-		}
-		_, ok := sess.Values["User.ID"]
-		if !ok {
+		ctx := context.GetContext(r)
+
+		if ctx.User == nil {
 			route(w, r)
 		} else {
 			// user is logged in
-			// TODO: redirect to home
+			routes.Redirect(w, r, "/home")
 		}
 	}
 }

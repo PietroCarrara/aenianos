@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/PietroCarrara/aenianos"
+	"github.com/PietroCarrara/aenianos/internal/context"
 	"github.com/PietroCarrara/aenianos/internal/data"
 	"github.com/PietroCarrara/aenianos/internal/templates"
 	"golang.org/x/crypto/bcrypt"
@@ -11,7 +12,9 @@ import (
 
 func RegisterGet(w http.ResponseWriter, r *http.Request) {
 
-	w.Write([]byte(templates.Register()))
+	ctx := context.GetContext(r)
+
+	w.Write([]byte(templates.Register(ctx)))
 }
 
 func RegisterPost(w http.ResponseWriter, r *http.Request) {
@@ -45,4 +48,6 @@ func RegisterPost(w http.ResponseWriter, r *http.Request) {
 	sess.Values["User.ID"] = u.ID
 
 	sess.Save(r, w)
+
+	Redirect(w, r, "/user")
 }
