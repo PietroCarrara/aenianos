@@ -11,7 +11,6 @@ import (
 	"github.com/PietroCarrara/aenianos"
 	"github.com/PietroCarrara/aenianos/internal/middleware"
 	"github.com/PietroCarrara/aenianos/internal/routes"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"net/http"
 	"os"
