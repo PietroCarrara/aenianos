@@ -26,4 +26,5 @@ func init() {
 	}
 
 	Db.AutoMigrate(&aenianos.User{})
+	Db.AutoMigrate(&aenianos.Genero{})
 }

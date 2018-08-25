@@ -6,15 +6,18 @@ import (
 	"github.com/PietroCarrara/aenianos/internal/data"
 	"github.com/PietroCarrara/aenianos/internal/templates"
 	"golang.org/x/crypto/bcrypt"
-	"log"
 	"net/http"
 )
 
 func LoginGet(w http.ResponseWriter, r *http.Request) {
 
-	ctx := context.GetContext(r)
+	ctx := context.GetContext(w, r)
 
-	w.Write([]byte(templates.Login(ctx)))
+	content := []byte(templates.Login(ctx))
+
+	ctx.Close()
+
+	w.Write(content)
 }
 
 func LoginPost(w http.ResponseWriter, r *http.Request) {
@@ -32,15 +35,13 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 			// TODO: Avisar do erro
 		} else {
 
-			sess, err := data.Store.Get(r, data.MainSession)
-			if err != nil {
-				log.Fatal(err)
-			}
+			defer Redirect(w, r, "/user")
 
-			sess.Values["User.ID"] = u.ID
-			sess.Save(r, w)
+			ctx := context.GetContext(w, r)
+			defer ctx.Close()
 
-			Redirect(w, r, "/user")
+			ctx.Session.Values["User.ID"] = u.ID
+
 		}
 	} else {
 		// Errou o usuário

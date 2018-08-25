@@ -1,23 +1,17 @@
 package routes
 
 import (
-	"github.com/PietroCarrara/aenianos/internal/data"
-	"log"
+	"github.com/PietroCarrara/aenianos/internal/context"
 	"net/http"
 )
 
 func Logout(w http.ResponseWriter, r *http.Request) {
 
-	sess, err := data.Store.Get(r, data.MainSession)
+	defer Redirect(w, r, "/user")
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	ctx := context.GetContext(w, r)
+	defer ctx.Close()
 
 	// Reset all values
-	sess.Values = map[interface{}]interface{}{}
-
-	sess.Save(r, w)
-
-	Redirect(w, r, "/user")
+	ctx.Session.Values = map[interface{}]interface{}{}
 }

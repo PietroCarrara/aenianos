@@ -2,11 +2,16 @@
 	"github.com/PietroCarrara/aenianos/internal/context"
 )%}
 
-{% func Footer(c context.Context) %}
+{% func Footer(ctx context.Context) %}
 
 		</div>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+		<script type="text/javascript">
+			{% for _, msg := range ctx.Session.Flashes() %}
+				Materialize.toast('{%v msg %}', 1500)
+			{% endfor%}
+		</script>
 	</body>
 </html>
 

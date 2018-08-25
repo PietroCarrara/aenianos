@@ -11,11 +11,24 @@ import (
 type Context struct {
 	User    *aenianos.User
 	Session *sessions.Session
+
+	w http.ResponseWriter
+	r *http.Request
 }
 
-func GetContext(r *http.Request) Context {
+func (c *Context) Close() {
 
-	res := Context{}
+	c.Session.Save(c.r, c.w)
+}
+
+func (c *Context) Closee(w http.ResponseWriter, r *http.Request) {
+
+	c.Session.Save(r, w)
+}
+
+func GetContext(w http.ResponseWriter, r *http.Request) Context {
+
+	res := Context{w: w, r: r}
 
 	// Get session
 	sess, err := data.Store.Get(r, data.MainSession)

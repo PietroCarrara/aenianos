@@ -1,0 +1,28 @@
+{%import (
+	"github.com/PietroCarrara/aenianos/internal/context"
+)%}
+
+
+{% func AddGenero(ctx context.Context) %}
+
+	{%= Header(ctx) %}
+
+	<h3>Adicionar Gênero</h3>
+
+	<div class="row">
+		<form class="col s8 offset-s2" method="post">
+			<div class="input-field">
+				<input id="nome" name="nome" type="text">
+				<label for="nome">Nome</label>
+			</div
+			<div class="input-field">
+				<button class="btn waves-red" type="submit">
+					Criar
+				</button>
+			</div>
+		</form>
+	</div>
+
+	{%= Footer(ctx) %}
+
+{% endfunc %}

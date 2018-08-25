@@ -8,7 +8,11 @@ import (
 
 func Home(w http.ResponseWriter, r *http.Request) {
 
-	ctx := context.GetContext(r)
+	ctx := context.GetContext(w, r)
 
-	w.Write([]byte(templates.Hello(ctx)))
+	content := []byte(templates.Hello(ctx))
+
+	ctx.Close()
+
+	w.Write(content)
 }

@@ -10,7 +10,8 @@ func AccessLevel(level int, route func(http.ResponseWriter, *http.Request)) func
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		ctx := context.GetContext(r)
+		ctx := context.GetContext(w, r)
+		defer ctx.Close()
 
 		if ctx.User == nil {
 			// User is not logged. Go to login
@@ -32,7 +33,8 @@ func Unlogged(route func(http.ResponseWriter, *http.Request)) func(http.Response
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		ctx := context.GetContext(r)
+		ctx := context.GetContext(w, r)
+		defer ctx.Close()
 
 		if ctx.User == nil {
 			route(w, r)

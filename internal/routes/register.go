@@ -12,9 +12,13 @@ import (
 
 func RegisterGet(w http.ResponseWriter, r *http.Request) {
 
-	ctx := context.GetContext(r)
+	ctx := context.GetContext(w, r)
 
-	w.Write([]byte(templates.Register(ctx)))
+	content := []byte(templates.Register(ctx))
+
+	ctx.Close()
+
+	w.Write(content)
 }
 
 func RegisterPost(w http.ResponseWriter, r *http.Request) {
@@ -40,14 +44,10 @@ func RegisterPost(w http.ResponseWriter, r *http.Request) {
 
 	data.Db.Save(&u)
 
-	sess, err := data.Store.Get(r, data.MainSession)
-	if err != nil {
-		log.Fatal(err)
-	}
+	defer Redirect(w, r, "/user")
 
-	sess.Values["User.ID"] = u.ID
+	ctx := context.GetContext(w, r)
+	defer ctx.Close()
 
-	sess.Save(r, w)
-
-	Redirect(w, r, "/user")
+	ctx.Session.Values["User.ID"] = u.ID
 }
