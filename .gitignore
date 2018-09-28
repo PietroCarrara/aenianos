@@ -1,3 +1,4 @@
 cmd/aenianos/aenianos
 *.qtpl.go
 vendor/
+main
