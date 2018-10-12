@@ -1,13 +1,15 @@
 package routes
 
 import (
-	"github.com/PietroCarrara/aenianos/internal/context"
 	"net/http"
+
+	"github.com/PietroCarrara/aenianos/internal/context"
 )
 
 func Logout(w http.ResponseWriter, r *http.Request) {
 
-	defer Redirect(w, r, "/user")
+	url, _ := GetRouter().Get("user-get").URL()
+	defer Redirect(w, r, url)
 
 	ctx := context.GetContext(w, r)
 	defer ctx.Close()

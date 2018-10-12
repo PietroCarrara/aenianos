@@ -1,7 +1,6 @@
 package routes
 
 import (
-	// "github.com/PietroCarrara/aenianos/internal/templates"
 	"net/http"
 )
 

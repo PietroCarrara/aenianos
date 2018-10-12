@@ -1,13 +1,14 @@
 package routes
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/PietroCarrara/aenianos"
 	"github.com/PietroCarrara/aenianos/internal/context"
 	"github.com/PietroCarrara/aenianos/internal/data"
 	"github.com/PietroCarrara/aenianos/internal/templates"
 	"golang.org/x/crypto/bcrypt"
-	"log"
-	"net/http"
 )
 
 func RegisterGet(w http.ResponseWriter, r *http.Request) {
@@ -44,7 +45,8 @@ func RegisterPost(w http.ResponseWriter, r *http.Request) {
 
 	data.Db.Save(&u)
 
-	defer Redirect(w, r, "/user")
+	url, _ := GetRouter().Get("user-get").URL()
+	defer Redirect(w, r, url)
 
 	ctx := context.GetContext(w, r)
 	defer ctx.Close()

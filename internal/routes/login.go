@@ -1,12 +1,13 @@
 package routes
 
 import (
+	"net/http"
+
 	"github.com/PietroCarrara/aenianos"
 	"github.com/PietroCarrara/aenianos/internal/context"
 	"github.com/PietroCarrara/aenianos/internal/data"
 	"github.com/PietroCarrara/aenianos/internal/templates"
 	"golang.org/x/crypto/bcrypt"
-	"net/http"
 )
 
 func LoginGet(w http.ResponseWriter, r *http.Request) {
@@ -35,7 +36,8 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 			// TODO: Avisar do erro
 		} else {
 
-			defer Redirect(w, r, "/user")
+			url, _ := GetRouter().Get("user-get").URL()
+			defer Redirect(w, r, url)
 
 			ctx := context.GetContext(w, r)
 			defer ctx.Close()

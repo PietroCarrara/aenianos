@@ -1,11 +1,12 @@
 package context
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/PietroCarrara/aenianos"
 	"github.com/PietroCarrara/aenianos/internal/data"
 	"github.com/gorilla/sessions"
-	"log"
-	"net/http"
 )
 
 type Context struct {

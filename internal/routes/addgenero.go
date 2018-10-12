@@ -1,11 +1,13 @@
 package routes
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/PietroCarrara/aenianos"
 	"github.com/PietroCarrara/aenianos/internal/context"
 	"github.com/PietroCarrara/aenianos/internal/data"
 	"github.com/PietroCarrara/aenianos/internal/templates"
-	"net/http"
 )
 
 func AddGeneroGet(w http.ResponseWriter, r *http.Request) {
@@ -21,7 +23,10 @@ func AddGeneroGet(w http.ResponseWriter, r *http.Request) {
 
 func AddGeneroPost(w http.ResponseWriter, r *http.Request) {
 
-	defer Redirect(w, r, "/admin/addgenero")
+	fmt.Println("AAA")
+
+	url, _ := GetRouter().Get("addgenero-get").URL()
+	defer Redirect(w, r, url)
 
 	ctx := context.GetContext(w, r)
 	defer ctx.Close()

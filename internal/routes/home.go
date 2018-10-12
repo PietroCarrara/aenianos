@@ -1,9 +1,10 @@
 package routes
 
 import (
+	"net/http"
+
 	"github.com/PietroCarrara/aenianos/internal/context"
 	"github.com/PietroCarrara/aenianos/internal/templates"
-	"net/http"
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
