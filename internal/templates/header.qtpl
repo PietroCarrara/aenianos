@@ -1,5 +1,7 @@
 {%import (
 	"github.com/PietroCarrara/aenianos/internal/context"
+	"github.com/PietroCarrara/aenianos"
+	"github.com/PietroCarrara/aenianos/internal/util"
 )%}
 
 
@@ -21,11 +23,16 @@
 						<a href="/home" class="brand-logo"><img height="60" src="/static/logo.png"></a>
 						<ul id="nav-mobile" class="right hide-on-med-and-down">
 							{% if ctx.User == nil  %}
-								<li><a href="/auth/login">Entrar</a></li>
-								<li><a href="/auth/register">Registrar-se</a></li>
+								<li><a href="{%s util.GetURL("login-get") %}">Entrar</a></li>
+								<li><a href="{%s util.GetURL("register-get") %}">Registrar-se</a></li>
 							{% else %}
-								<li>{%s ctx.User.Username %}</li>
-								<li><a href="/auth/logout">Sair</a></li>
+								<li><a href="#!">{%s ctx.User.Username %}</a></li>
+
+								{% if ctx.User.AccessLevel >= aenianos.ACCESS_ADMIN %}
+									<li><a href="{%s util.GetURL("adminmenu-get") %}" >Painel de Admin</a></li>
+								{% endif %}
+
+								<li><a href="/logout">Sair</a></li>
 							{% endif %}
 						</ul>
 					</div>

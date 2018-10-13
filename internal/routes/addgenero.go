@@ -8,6 +8,7 @@ import (
 	"github.com/PietroCarrara/aenianos/internal/context"
 	"github.com/PietroCarrara/aenianos/internal/data"
 	"github.com/PietroCarrara/aenianos/internal/templates"
+	"github.com/PietroCarrara/aenianos/internal/util"
 )
 
 func AddGeneroGet(w http.ResponseWriter, r *http.Request) {
@@ -25,8 +26,8 @@ func AddGeneroPost(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("AAA")
 
-	url, _ := GetRouter().Get("addgenero-get").URL()
-	defer Redirect(w, r, url)
+	url := util.GetURL("addgenero-get")
+	defer util.Redirect(w, r, url)
 
 	ctx := context.GetContext(w, r)
 	defer ctx.Close()

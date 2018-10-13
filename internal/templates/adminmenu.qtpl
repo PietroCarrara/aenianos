@@ -1,0 +1,17 @@
+{%import (
+	"github.com/PietroCarrara/aenianos/internal/context"
+)%}
+
+{% func AdminMenu(ctx context.Context) %}
+
+	{%= Header(ctx) %}
+
+	<h3>Painel de Admin</h3>
+
+	<ul>
+		<li><a href="/admin/addgenero">Adicionar Gênero</a></li>
+	</ul>
+
+	{%= Footer(ctx) %}
+
+{% endfunc %}

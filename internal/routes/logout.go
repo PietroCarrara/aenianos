@@ -4,12 +4,13 @@ import (
 	"net/http"
 
 	"github.com/PietroCarrara/aenianos/internal/context"
+	"github.com/PietroCarrara/aenianos/internal/util"
 )
 
 func Logout(w http.ResponseWriter, r *http.Request) {
 
-	url, _ := GetRouter().Get("user-get").URL()
-	defer Redirect(w, r, url)
+	url := util.GetURL("user-get")
+	defer util.Redirect(w, r, url)
 
 	ctx := context.GetContext(w, r)
 	defer ctx.Close()

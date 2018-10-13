@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/PietroCarrara/aenianos/internal/context"
+	"github.com/PietroCarrara/aenianos/internal/util"
 )
 
 func AccessLevel(level int) func(next http.Handler) http.Handler {
@@ -14,8 +15,8 @@ func AccessLevel(level int) func(next http.Handler) http.Handler {
 
 			if ctx.User == nil {
 				// User is not logged. Go to login
-				url, _ := GetRouter().Get("login-get").URL()
-				Redirect(w, r, url)
+				url := util.GetURL("login-get")
+				util.Redirect(w, r, url)
 				return
 			}
 
@@ -24,8 +25,8 @@ func AccessLevel(level int) func(next http.Handler) http.Handler {
 			} else {
 				// User is not authorized.
 				// TODO: add errors to the session
-				url, _ := GetRouter().Get("home-get").URL()
-				Redirect(w, r, url)
+				url := util.GetURL("home-get")
+				util.Redirect(w, r, url)
 			}
 		})
 	}
@@ -42,8 +43,8 @@ func Unlogged(next http.Handler) http.Handler {
 			next.ServeHTTP(w, r)
 		} else {
 			// user is logged in
-			url, _ := GetRouter().Get("home-get").URL()
-			Redirect(w, r, url)
+			url := util.GetURL("home-get")
+			util.Redirect(w, r, url)
 		}
 	})
 }

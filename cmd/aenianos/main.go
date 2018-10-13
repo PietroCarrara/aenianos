@@ -11,12 +11,13 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/PietroCarrara/aenianos/internal/routes"
+	"github.com/PietroCarrara/aenianos/internal/data"
+	_ "github.com/PietroCarrara/aenianos/internal/routes" // Initialize the routes
 )
 
 func main() {
 
-	r := routes.GetRouter()
+	r := data.GetRouter()
 
 	port := os.Getenv("PORT")
 	if port == "" {
