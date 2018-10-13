@@ -21,8 +21,8 @@
 						<a href="/home" class="brand-logo"><img height="60" src="/static/logo.png"></a>
 						<ul id="nav-mobile" class="right hide-on-med-and-down">
 							{% if ctx.User == nil  %}
-								<li><a href="/login">Entrar</a></li>
-								<li><a href="/register">Registrar-se</a></li>
+								<li><a href="/auth/login">Entrar</a></li>
+								<li><a href="/auth/register">Registrar-se</a></li>
 							{% else %}
 								<li>{%s ctx.User.Username %}</li>
 								<li><a href="/logout">Sair</a></li>
