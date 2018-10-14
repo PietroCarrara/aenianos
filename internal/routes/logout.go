@@ -9,12 +9,11 @@ import (
 
 func Logout(w http.ResponseWriter, r *http.Request) {
 
-	url := util.GetURL("user-get")
+	url := util.GetURL("home-get")
 	defer util.Redirect(w, r, url)
 
 	ctx := context.GetContext(w, r)
 	defer ctx.Close()
 
-	// Reset all values
-	ctx.Session.Values = map[interface{}]interface{}{}
+	ctx.User = nil
 }

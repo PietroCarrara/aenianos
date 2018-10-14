@@ -52,5 +52,5 @@ func RegisterPost(w http.ResponseWriter, r *http.Request) {
 	ctx := context.GetContext(w, r)
 	defer ctx.Close()
 
-	ctx.Session.Values["User.ID"] = u.ID
+	ctx.User = &u
 }

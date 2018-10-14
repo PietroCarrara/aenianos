@@ -9,22 +9,39 @@ import (
 	"github.com/gorilla/sessions"
 )
 
-type Context struct {
-	User    *aenianos.User
-	Session *sessions.Session
+const mainSession = "session"
 
-	w http.ResponseWriter
-	r *http.Request
+var store = sessions.NewCookieStore([]byte("secret"))
+
+type Context struct {
+	User *aenianos.User
+
+	session *sessions.Session
+	w       http.ResponseWriter
+	r       *http.Request
+}
+
+func (c *Context) Clear() {
+	c.session.Values = map[interface{}]interface{}{}
 }
 
 func (c *Context) Close() {
 
-	c.Session.Save(c.r, c.w)
+	if c.User != nil {
+		c.session.Values["User.ID"] = c.User.ID
+	} else {
+		delete(c.session.Values, "User.ID")
+	}
+
+	c.session.Save(c.r, c.w)
 }
 
-func (c *Context) Closee(w http.ResponseWriter, r *http.Request) {
+func (c *Context) Flashes() []interface{} {
+	return c.session.Flashes()
+}
 
-	c.Session.Save(r, w)
+func (c *Context) AddFlash(val interface{}) {
+	c.session.AddFlash(val)
 }
 
 func GetContext(w http.ResponseWriter, r *http.Request) Context {
@@ -32,11 +49,11 @@ func GetContext(w http.ResponseWriter, r *http.Request) Context {
 	res := Context{w: w, r: r}
 
 	// Get session
-	sess, err := data.Store.Get(r, data.MainSession)
+	sess, err := store.Get(r, mainSession)
 	if err != nil {
 		log.Fatal(err)
 	}
-	res.Session = sess
+	res.session = sess
 
 	// Get logged user
 	id, ok := sess.Values["User.ID"]

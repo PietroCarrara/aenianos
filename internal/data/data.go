@@ -6,13 +6,8 @@ import (
 	"github.com/PietroCarrara/aenianos"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
-	"github.com/gorilla/sessions"
 	"github.com/jinzhu/gorm"
 )
-
-const MainSession = "session"
-
-var Store = sessions.NewCookieStore([]byte("secret"))
 
 var Db *gorm.DB
 

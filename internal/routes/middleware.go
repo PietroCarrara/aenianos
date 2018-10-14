@@ -16,7 +16,8 @@ func AccessLevel(level int) func(next http.Handler) http.Handler {
 			if ctx.User == nil {
 				// User is not logged. Go to login
 				url := util.GetURL("login-get")
-				util.Redirect(w, r, url)
+				redirect := r.URL.EscapedPath()
+				util.Redirect(w, r, url+"?redirect="+redirect)
 				return
 			}
 

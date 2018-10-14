@@ -15,7 +15,9 @@ func LoginGet(w http.ResponseWriter, r *http.Request) {
 
 	ctx := context.GetContext(w, r)
 
-	content := []byte(templates.Login(ctx))
+	redirect := r.FormValue("redirect")
+
+	content := []byte(templates.Login(ctx, redirect))
 
 	ctx.Close()
 
@@ -26,6 +28,9 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 
 	user := r.PostFormValue("usuario")
 	pass := r.PostFormValue("senha")
+	redirect := r.PostFormValue("redirect")
+
+	ctx := context.GetContext(w, r)
 
 	u := aenianos.User{}
 	data.Db.Where("username = ?", user).First(&u)
@@ -37,17 +42,22 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 			// TODO: Avisar do erro
 		} else {
 
-			url := util.GetURL("user-get")
-			defer util.Redirect(w, r, url)
+			if redirect == "" {
+				redirect = util.GetURL("user-get")
+			}
 
-			ctx := context.GetContext(w, r)
-			defer ctx.Close()
+			ctx.User = &u
 
-			ctx.Session.Values["User.ID"] = u.ID
-
+			defer util.Redirect(w, r, redirect)
 		}
 	} else {
-		// Errou o usuário
-		// TODO: Avisar do erro
+		ctx.AddFlash("Usuário ou senha incorretos!")
+
+		url := util.GetURL("user-get")
+		if redirect != "" {
+			url += "?redirect=" + redirect
+		}
+		defer util.Redirect(w, r, url)
 	}
+	ctx.Close()
 }

@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/PietroCarrara/aenianos"
@@ -24,8 +23,6 @@ func AddGeneroGet(w http.ResponseWriter, r *http.Request) {
 
 func AddGeneroPost(w http.ResponseWriter, r *http.Request) {
 
-	fmt.Println("AAA")
-
 	url := util.GetURL("addgenero-get")
 	defer util.Redirect(w, r, url)
 
@@ -37,7 +34,7 @@ func AddGeneroPost(w http.ResponseWriter, r *http.Request) {
 	var genDb aenianos.Genero
 	data.Db.Where("LOWER(nome) = LOWER(?)", nome).First(&genDb)
 	if genDb.ID != 0 {
-		ctx.Session.AddFlash("Nome já registrado!")
+		ctx.AddFlash("Nome já registrado!")
 	} else {
 		gen := aenianos.Genero{Nome: nome}
 

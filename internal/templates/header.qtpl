@@ -26,7 +26,7 @@
 								<li><a href="{%s util.GetURL("login-get") %}">Entrar</a></li>
 								<li><a href="{%s util.GetURL("register-get") %}">Registrar-se</a></li>
 							{% else %}
-								<li><a href="#!">{%s ctx.User.Username %}</a></li>
+								<li><a href="/user">{%s ctx.User.Username %}</a></li>
 
 								{% if ctx.User.AccessLevel >= aenianos.ACCESS_ADMIN %}
 									<li><a href="{%s util.GetURL("adminmenu-get") %}" >Painel de Admin</a></li>
